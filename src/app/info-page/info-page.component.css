@@ -1,0 +1,17 @@
+form {
+  width: 80%;
+}
+
+form .mat-form-field {
+  display: block;
+}
+
+::ng-deep figure {
+  justify-content: left !important;
+  align-items: flex-start !important;
+  flex-direction: column;
+}
+
+mat-grid-list {
+  width: 65%;
+}
