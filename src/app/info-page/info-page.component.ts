@@ -1,16 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
+import {Validators, FormBuilder, FormGroup, AbstractControl} from '@angular/forms';
 import { UserService } from '../user.service';
+import * as moment from 'moment';
 
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return (control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
 
 export interface Doctype {
   value: number;
@@ -25,16 +18,9 @@ export interface Doctype {
 })
 export class InfoPageComponent implements OnInit {
 
+  updateForm: FormGroup;
+
   user: User;
-
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-
-  matcher = new MyErrorStateMatcher();
-
-  selectedValue: number;
 
   doctypes: Doctype[] = [
     {value: 1, viewValue: 'Паспорт'},
@@ -42,7 +28,9 @@ export class InfoPageComponent implements OnInit {
     {value: 3, viewValue: 'Паспорт моряка'}
   ];
 
-  constructor(private userService: UserService) { }
+  constructor(private fb: FormBuilder, private userService: UserService) {
+    this.createForm();
+  }
 
   ngOnInit() {
     this.getUser();
@@ -55,4 +43,34 @@ export class InfoPageComponent implements OnInit {
       });
   }
 
+  createForm() {
+    this.updateForm = this.fb.group({
+      surname: ['', [
+        Validators.maxLength(50),
+        Validators.pattern('[а-яА-я]*')
+      ]],
+      doctype: '',
+      country: ['', [
+        Validators.maxLength(50),
+        Validators.pattern('[а-яА-я]*')
+      ]],
+      date: ['', [
+        Validators.pattern('[0-9]{2}[.][0-9]{2}[.][0-9]{4}'),
+        this.validateDate
+      ]]
+    });
+  }
+
+  validateDate(control: AbstractControl) {
+    return !moment(control.value, 'MM-DD-YYYY').isValid();
+  }
+
 }
+
+// doctype: 1,
+//   country: 'Россия',
+//   date: 733449600000,
+//   seriesNumber: '1234 567890',
+//   code: 12345,
+//   authority: 'уфмс блабла.,',
+//   address: 'г краснодар бла бла 2,.'
