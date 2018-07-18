@@ -36,6 +36,10 @@ mat-icon {
   margin-right: 10px;
 }
 
-.difcolor-button {
-  color: #4285f4 !important;
+.difcolor1-button {
+  color: #42a5f5 !important;
+}
+
+.difcolor2-button {
+  color: white !important;
 }

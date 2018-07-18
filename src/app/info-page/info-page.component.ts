@@ -34,11 +34,11 @@ export class InfoPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUser();
+    this.getUser('78345544322');
   }
 
-  getUser(): void {
-    this.userService.getUser()
+  getUser(msisdn): void {
+    this.userService.getUser(msisdn)
       .subscribe(user => {
         this.user = user;
       });
