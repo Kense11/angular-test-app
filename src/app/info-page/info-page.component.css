@@ -1,5 +1,5 @@
 form {
-  width: 80%;
+  width: 90%;
 }
 
 form .mat-form-field {
@@ -13,5 +13,29 @@ form .mat-form-field {
 }
 
 mat-grid-list {
-  width: 65%;
+  width: 30%;
+}
+
+.mat-icon-button {
+  position: absolute;
+  top: -10px;
+  right: 5px;
+  display: none;
+}
+
+.mat-form-field:hover .mat-icon-button {
+  display: block;
+}
+
+mat-icon {
+  color: rgba(0,0,0,.38);
+}
+
+.mat-raised-button {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.difcolor-button {
+  color: #4285f4 !important;
 }

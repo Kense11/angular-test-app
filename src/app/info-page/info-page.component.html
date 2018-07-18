@@ -1,10 +1,13 @@
 <h3>Редактирование данных обонента</h3>
-<mat-grid-list cols="2" gutterSize="50px">
+<mat-grid-list cols="2" gutterSize="50px" rowHeight="610px">
   <mat-grid-tile>
     <p>Старые данные:</p>
     <form class="disabled-form">
       <mat-form-field>
         <input matInput placeholder="Фамилия" value = {{user.surname}} [disabled]='true'>
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="surname.value = user.surname">
+          <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
+        </button>
       </mat-form-field>
       <mat-form-field>
         <mat-select placeholder="Тип документа" [value]="user.doctype" name="doctype" [disabled]='true'>
@@ -12,24 +15,45 @@
             {{doctype.viewValue}}
           </mat-option>
         </mat-select>
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="doctype.value = user.doctype">
+          <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
+        </button>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Страна выдачи" value = {{user.country}} [disabled]='true'>
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="country.value = user.country">
+          <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
+        </button>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Дата выдачи" value = {{user.date}} [disabled]='true'>
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="date.value = user.date">
+          <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
+        </button>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Серия и номер" value = {{(user.seriesNumber)}} [disabled]='true'>
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="seriesNumber.value = user.seriesNumber">
+          <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
+        </button>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Код подразделения" value = {{user.code}} [disabled]='true'>
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="code.value = user.code">
+          <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
+        </button>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Орган, выдавший документ" value = {{user.authority}} [disabled]='true'>
+        <textarea matInput placeholder="Орган, выдавший документ" value = {{user.authority}} [disabled]='true'></textarea>
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="authority.value = user.authority">
+          <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
+        </button>
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Адрес регистрации" value = {{user.address}} [disabled]='true'>
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="address.value = user.address">
+          <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
+        </button>
       </mat-form-field>
     </form>
   </mat-grid-tile>
@@ -38,26 +62,53 @@
     <p>Изменить на:</p>
     <form [formGroup]="updateForm">
       <mat-form-field>
-        <input matInput placeholder="Фамилия" formControlName="surname">
+        <input #surname matInput placeholder="Фамилия" formControlName="surname">
         <mat-error>
           Неверно заполнено поле
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <mat-select placeholder="Тип документа" formControlName="doctype">
+        <mat-select #doctype placeholder="Тип документа" formControlName="doctype">
           <mat-option *ngFor="let doctype of doctypes" [value]="doctype.value">
             {{doctype.viewValue}}
           </mat-option>
         </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Страна выдачи" formControlName="country">
         <mat-error>
           Неверно заполнено поле
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Дата выдачи" formControlName="date">
+        <input #country matInput placeholder="Страна выдачи" formControlName="country">
+        <mat-error>
+          Неверно заполнено поле
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input #date matInput placeholder="Дата выдачи" formControlName="date">
+        <mat-error>
+          Неверно заполнено поле
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input #seriesNumber matInput placeholder="Серия и номер" formControlName="seriesNumber">
+        <mat-error>
+          Неверно заполнено поле
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input #code matInput placeholder="Код подразделения" formControlName="code">
+        <mat-error>
+          Неверно заполнено поле
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <textarea #authority matInput placeholder="Орган, выдавший документ" formControlName="authority"></textarea>
+        <mat-error>
+          Неверно заполнено поле
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input #address matInput placeholder="Адрес регистрации" formControlName="address">
         <mat-error>
           Неверно заполнено поле
         </mat-error>
@@ -65,3 +116,6 @@
     </form>
   </mat-grid-tile>
 </mat-grid-list>
+
+<button mat-raised-button class="difcolor-button" (click)="openDialog()">Прервать сценарий</button>
+<button mat-raised-button color="primary" routerLink="/cart">Добавить в корзину</button>
