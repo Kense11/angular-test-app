@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { MatDialog } from '@angular/material';
 import { Doctype } from '../models/doctype';
 import { DialogComponent } from '../dialog/dialog.component';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-info-page',
