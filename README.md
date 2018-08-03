@@ -1,3 +1,3 @@
 Для запуска проекта введите следующие команды в терминале:
-sudo npm i
-ng serve --open
+npm i
+npx ng serve --open
