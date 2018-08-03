@@ -1,57 +1,57 @@
-<h3>Редактирование данных обонента</h3>
+<h3>Редактирование данных абонента</h3>
 <mat-grid-list cols="2" gutterSize="50px" rowHeight="610px">
   <mat-grid-tile>
     <p>Старые данные:</p>
     <form class="disabled-form">
       <mat-form-field>
-        <input matInput placeholder="Фамилия" value = {{user.surname}} [disabled]='true'>
-        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="surname.value = user.surname">
+        <input matInput placeholder="Фамилия" value = {{user.surname}} [disabled]="true">
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="copyFormValue('surname')">
           <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
         </button>
       </mat-form-field>
       <mat-form-field>
-        <mat-select placeholder="Тип документа" [value]="user.doctype" name="doctype" [disabled]='true'>
+        <mat-select placeholder="Тип документа" [value]="user.doctype" name="doctype" [disabled]="true">
           <mat-option *ngFor="let doctype of doctypes" [value]="doctype.value">
             {{doctype.viewValue}}
           </mat-option>
         </mat-select>
-        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="doctype.value = user.doctype">
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="copyFormValue('doctype')">
           <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
         </button>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Страна выдачи" value = {{user.country}} [disabled]='true'>
-        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="country.value = user.country">
+        <input matInput placeholder="Страна выдачи" value = {{user.country}} [disabled]="true">
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="copyFormValue('country')">
           <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
         </button>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Дата выдачи" value = {{user.date}} [disabled]='true'>
-        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="date.value = user.date">
+        <input matInput placeholder="Дата выдачи" value = {{user.date}} [disabled]="true">
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="copyFormValue('date')">
           <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
         </button>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Серия и номер" value = {{(user.seriesNumber)}} [disabled]='true'>
-        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="seriesNumber.value = user.seriesNumber">
+        <input matInput placeholder="Серия и номер" value = {{(user.seriesNumber)}} [disabled]="true">
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="copyFormValue('seriesNumber')">
           <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
         </button>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Код подразделения" value = {{user.code}} [disabled]='true'>
-        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="code.value = user.code">
+        <input matInput placeholder="Код подразделения" value = {{user.code}} [disabled]="true">
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="copyFormValue('code')">
           <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
         </button>
       </mat-form-field>
       <mat-form-field>
-        <textarea matInput placeholder="Орган, выдавший документ" value = {{user.authority}} [disabled]='true'></textarea>
-        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="authority.value = user.authority">
+        <textarea matInput placeholder="Орган, выдавший документ" value = {{user.authority}} [disabled]="true"></textarea>
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="copyFormValue('authority')">
           <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
         </button>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Адрес регистрации" value = {{user.address}} [disabled]='true'>
-        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="address.value = user.address">
+        <input matInput placeholder="Адрес регистрации" value = {{user.address}} [disabled]="true">
+        <button aria-label="Скопировать данные" mat-icon-button title="Скопировать данные" type="button" (click)="copyFormValue('address')">
           <mat-icon role="img" aria-hidden="true">content_copy</mat-icon>
         </button>
       </mat-form-field>
@@ -62,7 +62,7 @@
     <p>Изменить на:</p>
     <form [formGroup]="updateForm">
       <mat-form-field>
-        <input #surname matInput placeholder="Фамилия" formControlName="surname">
+        <input #surname matInput placeholder="Фамилия" formControlName='surname'>
         <mat-error>
           Неверно заполнено поле
         </mat-error>

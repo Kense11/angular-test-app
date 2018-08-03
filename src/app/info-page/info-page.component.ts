@@ -1,23 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../user';
-import {Validators, FormBuilder, FormGroup, AbstractControl} from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { User } from '../models/user';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
 import * as moment from 'moment';
-import {MatDialog} from '@angular/material';
-
-
-export interface Doctype {
-  value: number;
-  viewValue: string;
-}
-
+import { MatDialog } from '@angular/material';
+import { Doctype } from '../models/doctype';
+import { DialogComponent } from '../dialog/dialog.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-info-page',
   templateUrl: './info-page.component.html',
   styleUrls: ['./info-page.component.css']
 })
-export class InfoPageComponent implements OnInit {
+export class InfoPageComponent implements OnInit, OnDestroy {
+
+  subscriptions = new Subscription();
 
   updateForm: FormGroup;
 
@@ -29,6 +27,15 @@ export class InfoPageComponent implements OnInit {
     {value: 3, viewValue: 'Паспорт моряка'}
   ];
 
+  static validateDate(control: AbstractControl) {
+    if (!moment(control.value, 'DD-MM-YYYY').isValid() ||
+      moment(control.value, 'DD-MM-YYYY').unix() <
+      moment('01.01.1991', 'DD-MM-YYYY').unix()) {
+      return {validDate: true};
+    }
+    return null;
+  }
+
   constructor(private fb: FormBuilder, private userService: UserService, public dialog: MatDialog) {
     this.createForm();
   }
@@ -38,10 +45,45 @@ export class InfoPageComponent implements OnInit {
   }
 
   getUser(msisdn): void {
-    this.userService.getUser(msisdn)
-      .subscribe(user => {
-        this.user = user;
-      });
+    this.subscriptions.add(
+      this.userService.getUser(msisdn)
+        .subscribe(user => {
+          this.user = user;
+        })
+    );
+  }
+
+  copyFormValue(flag: string): void {
+    switch (flag) {
+      case 'surname':
+        this.updateForm.controls['surname'].setValue(this.user.surname);
+        break;
+      case 'doctype':
+        this.updateForm.controls['doctype'].setValue(this.user.doctype);
+        break;
+      case 'country':
+        this.updateForm.controls['country'].setValue(this.user.country);
+        break;
+      case 'date':
+        this.updateForm.controls['date'].setValue(this.user.date);
+        break;
+      case 'seriesNumber':
+        this.updateForm.controls['seriesNumber'].setValue(this.user.seriesNumber);
+        break;
+      case 'code':
+        this.updateForm.controls['code'].setValue(this.user.code);
+        break;
+      case 'authority':
+        this.updateForm.controls['authority'].setValue(this.user.authority);
+        break;
+      case 'address':
+        this.updateForm.controls['address'].setValue(this.user.address);
+        break;
+    }
+  }
+
+  openDialog() {
+    this.dialog.open(DialogComponent);
   }
 
   createForm() {
@@ -62,7 +104,7 @@ export class InfoPageComponent implements OnInit {
       date: ['', [
         Validators.required,
         Validators.pattern('[0-9]{2}[.][0-9]{2}[.][0-9]{4}'),
-        this.validateDate
+        InfoPageComponent.validateDate
       ]],
       seriesNumber: ['', [
         Validators.required,
@@ -86,24 +128,7 @@ export class InfoPageComponent implements OnInit {
     });
   }
 
-  validateDate(control: AbstractControl) {
-    if (!moment(control.value, 'DD-MM-YYYY').isValid() ||
-      moment(control.value, 'DD-MM-YYYY').unix() <
-      moment('01.01.1991', 'DD-MM-YYYY').unix()) {
-      return {validDate: true};
-    }
-    return null;
-  }
-
-  openDialog() {
-    this.dialog.open(DialogComponent);
-
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }
-
-@Component({
-  selector: 'app-dialog',
-  templateUrl: 'app-dialog.html',
-  styles: ['.mat-dialog-actions { justify-content: center; }']
-})
-export class DialogComponent {}
